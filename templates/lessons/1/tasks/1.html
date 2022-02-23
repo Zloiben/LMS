@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Приветствие</h1>
+    <h4> Классная работа макс. 14 балл.</h4>
+    <h2>Условие</h2>
+    <p>Напишите программу, которая выводит «Привет, Яндекс!» (без кавычек) и больше ничего не делает.</p>
+    <form class="form-task" action="" method="post" enctype="multipart/form-data" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.file.label }}<br>
+            {{ form.file(class="form-control form-control-sm", type="file") }}
+
+            {% for error in form.data.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+    </form>
+{% endblock %}
