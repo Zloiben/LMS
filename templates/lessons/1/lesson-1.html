@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1 class="lesson-title">Задачи</h1>
+    <h1 class="lesson-task-title">Задачи</h1>
     <ul class="lesson-list-task">
         <ul class="lesson-list-task-classWork">
             <h3 class="header-lesson-task-classWork">Классная работа</h3>
             <li class="lesson-list-item-task">
                 <a class="lesson-card-task" href="/courses/lessons/lesson/1/tasks/1">
                     <h4>
-                        1. тест
+                        1. Hello, World!
                     </h4>
                 </a>
             </li>
@@ -33,5 +33,28 @@
                     </a>
                 </li>
             </ul>
+    </ul>
+    <h1 class="lesson-content-title">Материалы</h1>
+    <ul class="lesson-list-content">
+        <ul class="lesson-list-item-content">
+            <h5 class="header-lesson-content-">Учебник</h5>
+            <li class="lesson-item-content">
+                <a class="lesson-card-content" href="1/content">
+                    <h4>
+                        Знакомство с Python
+                    </h4>
+                </a>
+            </li>
+        </ul>
+        <ul class="lesson-list-item-content">
+            <h5 class="header-lesson-content-">Видео</h5>
+            <li class="lesson-item-content">
+                <a class="lesson-card-content" href="https://www.youtube.com/watch?v=I1FCLqb1-Ac">
+                    <h4>
+                        Знакомство с Python
+                    </h4>
+                </a>
+            </li>
+        </ul>
     </ul>
 {% endblock %}

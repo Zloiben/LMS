@@ -4,7 +4,7 @@ from wtforms import StringField, SubmitField, FileField
 from wtforms.validators import DataRequired
 
 
-class TaskInput(FlaskForm):
+class TaskInputFile(FlaskForm):
 
     file = FileField('Приложите файл с решением', validators=[FileRequired()])
     submit = SubmitField('Войти')

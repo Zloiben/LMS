@@ -4,8 +4,13 @@
     <h1>Приветствие</h1>
     <h4> Классная работа макс. 14 балл.</h4>
     <h2>Условие</h2>
-    <p>Напишите программу, которая выводит «Привет, Яндекс!» (без кавычек) и больше ничего не делает.</p>
+    <p>Напишите программу, которая выводит «Hello, World!» (без кавычек) и больше ничего не делает.</p>
     <form class="form-task" action="" method="post" enctype="multipart/form-data" novalidate>
+        {% if score == True %}
+            <h4 class="score-true">Вам начислены баллы</h4>
+        {% elif score == False %}
+            <h4 class="score-false">Вам нужно доработать</h4>
+        {% endif %}
         {{ form.hidden_tag() }}
         <p>
             {{ form.file.label }}<br>

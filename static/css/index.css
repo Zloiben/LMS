@@ -14,6 +14,9 @@ a:hover {
     text-decoration: none;
     color: #8c8c8c;
 }
+.logo-href:hover {
+    color: black;
+}
 /* Таблицы */
 table {
     border-collapse: separate;
@@ -32,6 +35,12 @@ table {
     float: right;
 }
 
+.score-true {
+    color: green;
+}
+.score-false {
+    color: red;
+}
 .container {
     max-width: 100%;
 }
