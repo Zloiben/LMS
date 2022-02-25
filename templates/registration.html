@@ -4,7 +4,7 @@
     <link rel="stylesheet" type="text/css" href="/static/css/registration.css"/>
     <h2 class="form-registration-title">Регистрация</h2>
     <section class="error-registration">
-        {% if error_registration == "email" %}
+        {% if error_registration == "emailDatabase" %}
             <div class="error-registration-email">
                 <h4>Данный аккаунт уже зарегистрирован</h4>
                 <h5>вы можете восстановить аккаунт перейдя по кнопки "Восстановить аккаунт"</h5>
@@ -13,6 +13,10 @@
         {% elif error_registration == "password" %}
             <div class="error-registration-password">
                 <h4>Пароли не совпадают</h4>
+            </div>
+        {% elif error_registration == "email" %}
+            <div class="error-registration-password">
+                <h4>Укажите нормальную почту</h4>
             </div>
         {% endif %}
     </section>
@@ -47,7 +51,7 @@
         </p>
         <p>
             {{ form.email.label }}<br>
-            {{ form.email(class="form-control", type="email")}}<br>
+            {{ form.email(type="email", class="form-control", placeholder="name@example.com")}}<br>
             {% for error in form.email.errors %}
                 <div class="alert alert-danger" role="alert">
                     {{ error }}

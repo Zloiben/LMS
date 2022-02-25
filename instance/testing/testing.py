@@ -1,4 +1,4 @@
-from instance.testing.lesson_1 import test_1
+from instance.testing.lesson_1.task_1 import test_1
 
 
 class Testing:

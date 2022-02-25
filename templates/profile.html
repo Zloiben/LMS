@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <link rel="stylesheet" type="text/css" href="/static/css/profile.css"/>
+    <section class="profile">
+        <h1>Профиль</h1>
+        <p>Имя {{ name }}</p>
+        <p>Почта {{ email }}</p>
+    </section>
+    <section class="courses">
+        <div class="Python-Basics">
+            <a class="course-card" href="/{{ id }}/courses/lessons">Основы программирования на Python</a>
+        </div>
+    </section>
+{% endblock %}

@@ -10,8 +10,9 @@ from instance.form.registstration import RegistrationForm
 from instance.form.task_input import TaskInputFile
 from instance.testing.testing import Testing
 
-from instance.function.cheking import allowed_file
+from instance.function.cheking import allowed_file, check_email
 from config import UPLOAD_FOLDER, standard_data
+from email_validate import validate, validate_or_fail
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
@@ -53,34 +54,48 @@ def main():
 def login():
     form = LoginFrom()
     if form.validate_on_submit():
-        if Users.query.filter_by(email=form.email.data).first() is not None:
-            if Users.query.filter_by(email=form.email.data).first().password == form.password.data:
-                return redirect(f'/{Users.query.filter_by(email=form.email.data).first().id}/courses')
+        if check_email(form.email.data) is True:
+            if Users.query.filter_by(email=form.email.data).first() is not None:
+                if Users.query.filter_by(email=form.email.data).first().password == form.password.data:
+                    return redirect(f'/{Users.query.filter_by(email=form.email.data).first().id}/courses')
 
-        return render_template('verification.html', form=form, error_login=True)
+            return render_template('verification.html', form=form, error_login=True)
+        else:
+            # TODO: указать ошибку
+            pass
     return render_template('verification.html', form=form)
 
 
 @app.route('/registration', methods=['GET', 'POST'])
 def registration():
     form = RegistrationForm()
-    if Users.query.filter_by(email=form.email.data).first() is None:
-        if form.validate_on_submit():
-            data = json.dumps(standard_data)
-            if form.password.data == form.password2.data:
-                db.session.add(Users(form.username.data, "user", form.password.data, form.email.data, data))
-                db.session.commit()
-                return redirect(f'/{Users.query.filter_by(email=form.email.data).first().id}/courses')
+    if form.validate_on_submit():
+        if check_email(form.email.data) is True:
+            if Users.query.filter_by(email=form.email.data).first() is None:
+                if form.password.data == form.password2.data:
+                    data = json.dumps(standard_data)
+                    db.session.add(Users(form.username.data, "user", form.password.data, form.email.data, data))
+                    db.session.commit()
+                    return redirect(f'/{Users.query.filter_by(email=form.email.data).first().id}/courses')
+                else:
+                    return render_template('registration.html', form=form, error_registration="password")
             else:
-                return render_template('registration.html', form=form, error_registration="password")
+                return render_template('registration.html', form=form, error_registration="emailDatabase")
+        else:
+            return render_template('registration.html', form=form, error_registration="email")
     else:
-        return render_template('registration.html', form=form, error_registration="email")
-    return render_template('registration.html', form=form)
+        return render_template('registration.html', form=form)
 
 
 @app.route('/<int:id>/courses')
 def courses(id):
     return render_template('courses.html', id=id)
+
+
+@app.route('/<int:id>/profile')
+def profile(id):
+    user = Users.query.filter_by(id=id).first()
+    return render_template('profile.html', id=id, name=user.name, email=user.email)
 
 
 @app.route('/<int:id>/courses/lessons')
@@ -110,7 +125,7 @@ def tasks(id, lesson, task):
         if allowed_file(f.filename):
             # Сохранение отправленного файла в папку для тестов
             filename = secure_filename(f"test_file_{task}.py")
-            f.save(os.path.join(app.config['UPLOAD_FOLDER'], f'lesson_{lesson}', filename))
+            f.save(os.path.join(app.config['UPLOAD_FOLDER'], f'lesson_{lesson}\\task_{task}', filename))
             result = Testing(lesson, task)
             if result.test() is True:
                 score = max_score
