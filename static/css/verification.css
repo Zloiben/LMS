@@ -1,3 +1,7 @@
 .form-login-title {
     text-align: center;
 }
+
+.error-login {
+    color: red;
+}

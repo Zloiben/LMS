@@ -16,34 +16,24 @@ from config import UPLOAD_FOLDER, standard_data
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.sqlite3'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///Data.sqlite3'
 db = SQLAlchemy(app)
 
 
-class Teacher(db.Model):
+class Users(db.Model):
 
-    id = db.Column('teacher_id', db.Integer, primary_key=True)
+    id = db.Column('id', db.Integer, primary_key=True)
     name = db.Column(db.String(100))
     password = db.Column(db.String(50))
+    role = db.Column(db.String(20))
     email = db.Column(db.String(100))
     data = db.Column(db.TEXT())
 
-    def __repr__(self):
-        return '<Teacher %r>' % self.name
-
-
-class Students(db.Model):
-
-    id = db.Column('student_id', db.Integer, primary_key=True)
-    name = db.Column(db.String(100))
-    password = db.Column(db.String(50))
-    email = db.Column(db.String(100))
-    data = db.Column(db.TEXT())
-
-    def __init__(self, name, password, email, data):
+    def __init__(self, name, role, password, email, data):
 
         self.name = name
         self.password = password
+        self.role = role
         self.email = email
         self.data = data
 
@@ -63,36 +53,28 @@ def main():
 def login():
     form = LoginFrom()
     if form.validate_on_submit():
-        if form.email.data == "admin" or Students.query.filter_by(email=form.email.data).first() is not None:
-            if form.password.data == "admin" or \
-                    (Students.query.filter_by(email=form.email.data).first().password is not None and
-                     Students.query.filter_by(email=form.email.data).first().password == form.password.data):
-                return redirect(f'/{Students.query.filter_by(email=form.email.data).first().id}/courses')
-            else:
-                # TODO: Выводить что не правильно введены данные
-                pass
-        else:
-            # TODO: Выводить что не правильно введены данные
-            pass
+        if Users.query.filter_by(email=form.email.data).first() is not None:
+            if Users.query.filter_by(email=form.email.data).first().password == form.password.data:
+                return redirect(f'/{Users.query.filter_by(email=form.email.data).first().id}/courses')
+
+        return render_template('verification.html', form=form, error_login=True)
     return render_template('verification.html', form=form)
 
 
 @app.route('/registration', methods=['GET', 'POST'])
 def registration():
     form = RegistrationForm()
-    if Students.query.filter_by(email=form.email.data).first() is None:
+    if Users.query.filter_by(email=form.email.data).first() is None:
         if form.validate_on_submit():
             data = json.dumps(standard_data)
             if form.password.data == form.password2.data:
-                db.session.add(Students(form.username.data, form.password.data, form.email.data, data))
+                db.session.add(Users(form.username.data, "user", form.password.data, form.email.data, data))
                 db.session.commit()
-                return redirect(f'/{Students.query.filter_by(email=form.email.data).first().id}/courses')
+                return redirect(f'/{Users.query.filter_by(email=form.email.data).first().id}/courses')
             else:
-                # TODO: Должно что то выводить
-                print("ERROR")
+                return render_template('registration.html', form=form, error_registration="password")
     else:
-        # TODO: Сообщить что почта в бд и попросить войти в акк
-        pass
+        return render_template('registration.html', form=form, error_registration="email")
     return render_template('registration.html', form=form)
 
 
@@ -114,7 +96,7 @@ def lesson(id, lesson):
 @app.route('/<int:id>/courses/lessons/lesson/<lesson>/tasks/<task>',  methods=['GET', 'POST'])
 def tasks(id, lesson, task):
 
-    data = Students.query.filter_by(id=id).first().data
+    data = Users.query.filter_by(id=id).first().data
     data = json.loads(data)
 
     result = data['courses']['Основы программирования на Python']['lessons'][lesson][f'task_{task}']['result']
@@ -135,7 +117,7 @@ def tasks(id, lesson, task):
                 data['courses']['Основы программирования на Python']['lessons'][lesson][f'task_{task}']['score'] = max_score
             data['courses']['Основы программирования на Python']['lessons'][lesson][f'task_{task}']['result'] = result.test()
             data = json.dumps(data)
-            Students.query.filter_by(id=id).first().data = data
+            Users.query.filter_by(id=id).first().data = data
             db.session.commit()
             return render_template(file_path, form=form, score=score, id=id, result=result.test())
 

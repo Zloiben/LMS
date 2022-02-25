@@ -3,6 +3,19 @@
 {% block content %}
     <link rel="stylesheet" type="text/css" href="/static/css/registration.css"/>
     <h2 class="form-registration-title">Регистрация</h2>
+    <section class="error-registration">
+        {% if error_registration == "email" %}
+            <div class="error-registration-email">
+                <h4>Данный аккаунт уже зарегистрирован</h4>
+                <h5>вы можете восстановить аккаунт перейдя по кнопки "Восстановить аккаунт"</h5>
+                <h5>или войти в аккаунт перейдя по кнопки "Войти"</h5>
+            </div>
+        {% elif error_registration == "password" %}
+            <div class="error-registration-password">
+                <h4>Пароли не совпадают</h4>
+            </div>
+        {% endif %}
+    </section>
     <form class="form-registration" action="" method="post" novalidate>
         {{ form.hidden_tag() }}
         <p>
