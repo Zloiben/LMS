@@ -1,22 +1,4 @@
-.form-login-title {
-    text-align: center;
-}
 
-/* Ссылки */
-a {
-    text-decoration: none;
-    color: black;
-}
-a:visited {
-    color: black;
-}
-a:hover {
-    text-decoration: none;
-    color: #8c8c8c;
-}
-.logo-href:hover {
-    color: black;
-}
 /* Таблицы */
 table {
     border-collapse: separate;
@@ -35,33 +17,10 @@ table {
     float: right;
 }
 
-.score-true {
-    color: green;
-}
-.score-false {
-    color: red;
-}
-.container {
-    max-width: 100%;
-}
-.logo-title {
-    width: 20%;
-    height: 20%;
-    font-size: 30px;
-}
-
-.logo-image{
-    width: 20%;
-    height: 20%;
-}
-
 .prog-image {
     width: 100%;
     height: 300px;
-    display: block;
     margin-top: 10px;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 .standard-description-style {
@@ -85,6 +44,7 @@ table {
 }
 .main-content {
     background: #ffd21e;
+    width: 100%;
 }
 
 .content-text {

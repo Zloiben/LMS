@@ -1,10 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
+    <link rel="stylesheet" type="text/css" href="/static/css/courses.css"/>
     <h1 class="courses-title">Курсы</h1>
     <ul class="courses-list">
         <li class="courses-list-item">
-            <a class="course-card" href="/courses/lessons">
+            <a class="course-card" href="/{{ id }}/courses/lessons">
                 <h4>
                     Основы программирования на Python
                 </h4>

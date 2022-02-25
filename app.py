@@ -1,17 +1,17 @@
+import json
 import os
 
-from flask import Flask, render_template, redirect, url_for, make_response, request
+from flask import Flask, render_template, redirect, make_response
 from werkzeug.utils import secure_filename
 from flask_sqlalchemy import SQLAlchemy
 
-from login import LoginFrom
-from registstration import RegistrationForm
-from task_input import TaskInputFile
+from instance.form.login import LoginFrom
+from instance.form.registstration import RegistrationForm
+from instance.form.task_input import TaskInputFile
+from instance.testing.testing import Testing
 
-from testing import Testing
 from instance.function.cheking import allowed_file
-from config import UPLOAD_FOLDER
-
+from config import UPLOAD_FOLDER, standard_data
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
@@ -63,65 +63,92 @@ def main():
 def login():
     form = LoginFrom()
     if form.validate_on_submit():
-        return redirect('/courses')
+        if form.email.data == "admin" or Students.query.filter_by(email=form.email.data).first() is not None:
+            if form.password.data == "admin" or \
+                    (Students.query.filter_by(email=form.email.data).first().password is not None and
+                     Students.query.filter_by(email=form.email.data).first().password == form.password.data):
+                return redirect(f'/{Students.query.filter_by(email=form.email.data).first().id}/courses')
+            else:
+                # TODO: Выводить что не правильно введены данные
+                pass
+        else:
+            # TODO: Выводить что не правильно введены данные
+            pass
     return render_template('verification.html', form=form)
 
 
 @app.route('/registration', methods=['GET', 'POST'])
 def registration():
-    # TODO: Проверка почты в бд
     form = RegistrationForm()
-    if form.validate_on_submit():
-        if form.password.data == form.password2.data:
-            db.session.add(Students(form.username.data, form.password.data, form.email.data, '{}'))
-            db.session.commit()
-            return redirect('/courses')
-        else:
-            # TODO: Должно что то выводить
-            print("ERROR")
+    if Students.query.filter_by(email=form.email.data).first() is None:
+        if form.validate_on_submit():
+            data = json.dumps(standard_data)
+            if form.password.data == form.password2.data:
+                db.session.add(Students(form.username.data, form.password.data, form.email.data, data))
+                db.session.commit()
+                return redirect(f'/{Students.query.filter_by(email=form.email.data).first().id}/courses')
+            else:
+                # TODO: Должно что то выводить
+                print("ERROR")
+    else:
+        # TODO: Сообщить что почта в бд и попросить войти в акк
+        pass
     return render_template('registration.html', form=form)
 
 
-@app.route('/courses')
-def courses():
-    result = make_response(render_template('courses.html'))
-    result.headers.values()
-    return result
+@app.route('/<int:id>/courses')
+def courses(id):
+    return render_template('courses.html', id=id)
 
 
-@app.route('/courses/lessons')
-def lessons():
-    return render_template('lessons.html')
+@app.route('/<int:id>/courses/lessons')
+def lessons(id):
+    return render_template('lessons.html', id=id)
 
 
-@app.route('/courses/lessons/lesson/<lesson>')
-def lesson(lesson):
-    return render_template(f'lessons/{lesson}/lesson-1.html')
+@app.route('/<int:id>/courses/lessons/lesson/<lesson>')
+def lesson(id, lesson):
+    return render_template(f'courses/Python Basics/lessons/{lesson}/lesson-1.html', id=id)
 
 
-@app.route('/courses/lessons/lesson/<lesson>/tasks/<task>',  methods=['GET', 'POST'])
-def tasks(lesson, task):
-    file_path = f'lessons/{str(lesson)}/tasks/{str(task)}.html'
+@app.route('/<int:id>/courses/lessons/lesson/<lesson>/tasks/<task>',  methods=['GET', 'POST'])
+def tasks(id, lesson, task):
+
+    data = Students.query.filter_by(id=id).first().data
+    data = json.loads(data)
+
+    result = data['courses']['Основы программирования на Python']['lessons'][lesson][f'task_{task}']['result']
+    score = data['courses']['Основы программирования на Python']['lessons'][lesson][f'task_{task}']['score']
+    max_score = data['courses']['Основы программирования на Python']['lessons'][lesson][f'task_{task}']['max_score']
+    file_path = f'courses/Python Basics/lessons/{str(lesson)}/tasks/{str(task)}.html'
+
     form = TaskInputFile()
     if form.validate_on_submit():
         f = form.file.data
         if allowed_file(f.filename):
-            filename = f"test_file_{task}.py"
-            filename = secure_filename(filename)
+            # Сохранение отправленного файла в папку для тестов
+            filename = secure_filename(f"test_file_{task}.py")
             f.save(os.path.join(app.config['UPLOAD_FOLDER'], f'lesson_{lesson}', filename))
             result = Testing(lesson, task)
-            return render_template(file_path, form=form, score=result.test())
+            if result.test() is True:
+                score = max_score
+                data['courses']['Основы программирования на Python']['lessons'][lesson][f'task_{task}']['score'] = max_score
+            data['courses']['Основы программирования на Python']['lessons'][lesson][f'task_{task}']['result'] = result.test()
+            data = json.dumps(data)
+            Students.query.filter_by(id=id).first().data = data
+            db.session.commit()
+            return render_template(file_path, form=form, score=score, id=id, result=result.test())
 
         else:
-            print("Не верный формат файла")
+            return render_template(file_path, form=form, id=id, score=score, result="error")
 
-    return render_template(file_path, form=form)
+    return render_template(file_path, form=form, id=id, score=score, result=result)
 
 
-@app.route('/courses/lessons/lesson/<lesson>/content')
-def content(lesson):
-    file_path = f'lessons/{lesson}/content-lesson-{lesson}.html'
-    return render_template(file_path)
+@app.route('/<int:id>/courses/lessons/lesson/<lesson>/content')
+def content(id, lesson):
+    file_path = f'courses/Python Basics/lessons/{lesson}/content-lesson-{lesson}.html'
+    return render_template(file_path, id=id)
 
 
 if __name__ == '__main__':
