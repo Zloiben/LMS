@@ -23,7 +23,7 @@ ALLOWED_EXTENSIONS = ['py', 'txt']
 
 standard_data = {
     "courses": {
-        "Основы программирования на Python": {
+        "Python Basics": {
             "profile": {
                 "all_score": 0
             },

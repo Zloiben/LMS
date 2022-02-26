@@ -1,7 +1,8 @@
 import json
 import os
 
-from flask import Flask, render_template, redirect, make_response
+
+from flask import Flask, render_template, redirect
 from werkzeug.utils import secure_filename
 from flask_sqlalchemy import SQLAlchemy
 
@@ -12,7 +13,6 @@ from instance.testing.testing import Testing
 
 from instance.function.cheking import allowed_file, check_email
 from config import UPLOAD_FOLDER, standard_data
-from email_validate import validate, validate_or_fail
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
@@ -58,11 +58,8 @@ def login():
             if Users.query.filter_by(email=form.email.data).first() is not None:
                 if Users.query.filter_by(email=form.email.data).first().password == form.password.data:
                     return redirect(f'/{Users.query.filter_by(email=form.email.data).first().id}/courses')
-
-            return render_template('verification.html', form=form, error_login=True)
-        else:
-            # TODO: указать ошибку
-            pass
+            return render_template('verification.html', form=form, error_login='password')
+        return render_template('verification.html', form=form, error_login='email')
     return render_template('verification.html', form=form)
 
 
@@ -77,14 +74,10 @@ def registration():
                     db.session.add(Users(form.username.data, "user", form.password.data, form.email.data, data))
                     db.session.commit()
                     return redirect(f'/{Users.query.filter_by(email=form.email.data).first().id}/courses')
-                else:
-                    return render_template('registration.html', form=form, error_registration="password")
-            else:
-                return render_template('registration.html', form=form, error_registration="emailDatabase")
-        else:
-            return render_template('registration.html', form=form, error_registration="email")
-    else:
-        return render_template('registration.html', form=form)
+                return render_template('registration.html', form=form, error_registration="password")
+            return render_template('registration.html', form=form, error_registration="emailDatabase")
+        return render_template('registration.html', form=form, error_registration="email")
+    return render_template('registration.html', form=form)
 
 
 @app.route('/<int:id>/courses')
@@ -95,7 +88,9 @@ def courses(id):
 @app.route('/<int:id>/profile')
 def profile(id):
     user = Users.query.filter_by(id=id).first()
-    return render_template('profile.html', id=id, name=user.name, email=user.email)
+    data = json.loads(user.data)
+    all_score = data['courses']['Python Basics']['profile']['all_score']
+    return render_template('profile.html', id=id, name=user.name, email=user.email, all_score=all_score)
 
 
 @app.route('/<int:id>/courses/lessons')
@@ -111,35 +106,41 @@ def lesson(id, lesson):
 @app.route('/<int:id>/courses/lessons/lesson/<lesson>/tasks/<task>',  methods=['GET', 'POST'])
 def tasks(id, lesson, task):
 
+    file_path = f'courses/Python Basics/lessons/{str(lesson)}/tasks/{str(task)}.html'
+
     data = Users.query.filter_by(id=id).first().data
     data = json.loads(data)
-
-    result = data['courses']['Основы программирования на Python']['lessons'][lesson][f'task_{task}']['result']
-    score = data['courses']['Основы программирования на Python']['lessons'][lesson][f'task_{task}']['score']
-    max_score = data['courses']['Основы программирования на Python']['lessons'][lesson][f'task_{task}']['max_score']
-    file_path = f'courses/Python Basics/lessons/{str(lesson)}/tasks/{str(task)}.html'
+    lesson_data = data['courses']['Python Basics']['lessons'][lesson][f'task_{task}']
+    score = lesson_data['score']
 
     form = TaskInputFile()
     if form.validate_on_submit():
         f = form.file.data
         if allowed_file(f.filename):
+
             # Сохранение отправленного файла в папку для тестов
             filename = secure_filename(f"test_file_{task}.py")
             f.save(os.path.join(app.config['UPLOAD_FOLDER'], f'lesson_{lesson}\\task_{task}', filename))
-            result = Testing(lesson, task)
-            if result.test() is True:
-                score = max_score
-                data['courses']['Основы программирования на Python']['lessons'][lesson][f'task_{task}']['score'] = max_score
-            data['courses']['Основы программирования на Python']['lessons'][lesson][f'task_{task}']['result'] = result.test()
+            result_testing = Testing(lesson, task)
+            # TODO: Trello - задача <хранение результатов тестов>
+            if result_testing.test() is True:
+                score = lesson_data['max_score']
+                data['courses']['Python Basics']['lessons'][lesson][f'task_{task}']['score'] = lesson_data['max_score']
+                data['courses']['Python Basics']["profile"]['all_score'] += 14
+            else:
+                score = 0
+                data['courses']['Python Basics']['lessons'][lesson][f'task_{task}']['score'] = 0
+                if data['courses']['Python Basics']["profile"]['all_score'] - 14 < 0:
+                    data['courses']['Python Basics']["profile"]['all_score'] = 0
+                else:
+                    data['courses']['Python Basics']["profile"]['all_score'] -= 14
+            data['courses']['Python Basics']['lessons'][lesson][f'task_{task}']['result'] = result_testing.test()
             data = json.dumps(data)
             Users.query.filter_by(id=id).first().data = data
             db.session.commit()
-            return render_template(file_path, form=form, score=score, id=id, result=result.test())
-
-        else:
-            return render_template(file_path, form=form, id=id, score=score, result="error")
-
-    return render_template(file_path, form=form, id=id, score=score, result=result)
+            return render_template(file_path, form=form, score=score, id=id, result=lesson_data['result'])
+        return render_template(file_path, form=form, id=id, score=score, result="error")
+    return render_template(file_path, form=form, id=id, score=score, result=lesson_data['result'])
 
 
 @app.route('/<int:id>/courses/lessons/lesson/<lesson>/content')

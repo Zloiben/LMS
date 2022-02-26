@@ -3,9 +3,13 @@
 {% block content %}
     <link rel="stylesheet" type="text/css" href="/static/css/verification.css"/>
     <h2 class="form-login-title">Авторизация</h2>
-    {% if error_login == True %}
-        <h4 class="error-login">Указанные вами данные не верные</h4>
-    {% endif %}
+    <div class="error-login">
+        {% if error_login == "password" %}
+            <h4 class="error-login-password">Указанные вами данные не верные</h4>
+        {% elif error_login == "email" %}
+            <h4 class="error-login-email">Проверьте правильно ли введена почта</h4>
+        {% endif %}
+    </div>
     <form class="form-login" action="" method="post" novalidate>
         {{ form.hidden_tag() }}
         <p>
