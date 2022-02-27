@@ -7,7 +7,9 @@
         {% if error_login == "password" %}
             <h4 class="error-login-password">Указанные вами данные не верные</h4>
         {% elif error_login == "email" %}
-            <h4 class="error-login-email">Проверьте правильно ли введена почта</h4>
+            <h4 class="error-login-email">Проверьте правильно ли введена почта </h4>
+            <p>Возможно вы не зарегистрированы можете воспользоваться <a href="/registration">Регистрация</a></p>
+            <p>или можете восстановить аккаунт <a href="/restore_account">Восстановить данные</a></p>
         {% endif %}
     </div>
     <form class="form-login" action="" method="post" novalidate>

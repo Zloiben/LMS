@@ -1,15 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <link rel="stylesheet" type="text/css" href="/static/css/registration.css"/>
-    <h2 class="form-registration-title">Регистрация</h2>
+    <h2 class="form-restore-account-title">Восстановление данных</h2>
     <section class="error-registration">
         {% if error_registration == "emailDatabase" %}
             <div class="error-registration-email">
-                <h4>Данный аккаунт уже зарегистрирован</h4>
-                <h5>вы можете восстановить аккаунт перейдя по кнопки <a href="/restore_account">Восстановить аккаунт</a></h5>
-                <h5>или войти в аккаунт перейдя по кнопки <a href="/login">Войти</a></h5>
-
+                <h4>Данный аккаунт не существует</h4>
             </div>
         {% elif error_registration == "password" %}
             <div class="error-registration-password">
@@ -21,12 +17,12 @@
             </div>
         {% endif %}
     </section>
-    <form class="form-registration" action="" method="post" novalidate>
+    <form class="form-restore-account" action="" method="post" novalidate>
         {{ form.hidden_tag() }}
         <p>
-            {{ form.username.label }}<br>
-            {{ form.username(class="form-control") }}<br>
-            {% for error in form.username.errors %}
+            {{ form.email.label }}<br>
+            {{ form.email(type="email", class="form-control", placeholder="name@example.com")}}<br>
+            {% for error in form.email.errors %}
                 <div class="alert alert-danger" role="alert">
                     {{ error }}
                 </div>
@@ -45,15 +41,6 @@
             {{ form.password2.label }}<br>
             {{ form.password2(class="form-control", type="password") }}<br>
             {% for error in form.password2.errors %}
-                <div class="alert alert-danger" role="alert">
-                    {{ error }}
-                </div>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.email.label }}<br>
-            {{ form.email(type="email", class="form-control", placeholder="name@example.com")}}<br>
-            {% for error in form.email.errors %}
                 <div class="alert alert-danger" role="alert">
                     {{ error }}
                 </div>

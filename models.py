@@ -1,7 +1,8 @@
-from app import db
+from flask_login import UserMixin
+from . import db, create_app
 
 
-class Users(db.Model):
+class User(UserMixin, db.Model):
 
     id = db.Column('id', db.Integer, primary_key=True)
     name = db.Column(db.String(100))
@@ -22,4 +23,4 @@ class Users(db.Model):
         return '<User %r>' % self.name
 
 
-db.create_all()
+db.create_all(app=create_app())
