@@ -32,6 +32,15 @@
                 </div>
             {% endfor %}
         </p>
+        <p>
+            {{ form.remember.label }}<br>
+            {{ form.remember(class="form-control") }}<br>
+            {% for error in form.remember.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </p>
         <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
     </form>
 

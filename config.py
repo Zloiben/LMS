@@ -11,10 +11,10 @@ UPLOAD_FOLDER = f'instance\\testing'
 # -------------------------------------------Для проверки---------------------------------------------------------------
 
 
-# Для проверки почты. file - checking.py function - check_email
+# Для проверки почты.
 REGEX = re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+')
 
-# Для проверки файла. file - checking.py function - allowed_file
+# Для проверки файла.
 ALLOWED_EXTENSIONS = ['py', 'txt']
 
 
