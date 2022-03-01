@@ -5,8 +5,19 @@ html, body{
   width:100%;
   height: 100%;
 }
+.button-profile-href {
+    background: black;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    width: 150px;
+    height: 50px;
+    margin-top: -55px;
+    margin-right: 165px;
+    float: right;
+    text-align: center;
 
-a {
+}a {
     text-decoration: none;
     color: black;
 }
@@ -18,6 +29,17 @@ a:hover {
     color: #8c8c8c;
 }
 
+.button-profile-href {
+    text-decoration: none;
+    color: white;
+}
+.button-profile-href:visited {
+    color: white;
+}
+.button-profile-href:hover {
+    text-decoration: none;
+    color: white;
+}
 .logo-title {
     width: 20%;
     height: 20%;

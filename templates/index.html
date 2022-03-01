@@ -4,13 +4,16 @@
 
     <!--Подключение стилей-->
     <link rel="stylesheet" type="text/css" href="/static/css/index.css"/>
-
     <form action="login">
         <button type="submit" class="login-button">
             Войти LMS
         </button>
     </form>
-
+    {% if user_auth == True %}
+            <div class="button-profile">
+                <a class="button-profile-href" href="/profile">Профиль</a>
+            </div>
+    {% endif %}
     <img class="prog-image" src="../static/images/prog.jpg" alt="Не удалось загрузить"/>
 
     <main class="main-content">

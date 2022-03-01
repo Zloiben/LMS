@@ -6,6 +6,11 @@
     <h4> Классная работа макс. 14 балл.</h4>
     <h2>Условие</h2>
     <p>Напишите программу, которая выводит «Hello, World!» (без кавычек) и больше ничего не делает.</p>
+    {% if user_auth == True %}
+            <div class="button-profile">
+                <a class="button-profile-href" href="/profile">Профиль</a>
+            </div>
+    {% endif %}
     <form class="form-task" action="" method="post" enctype="multipart/form-data" novalidate>
         {% if result == True %}
             <h4 class="result-True">Вам начислено {{ score }} баллов</h4>

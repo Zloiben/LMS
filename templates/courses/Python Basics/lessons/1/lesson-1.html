@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
+    {% if user_auth == True %}
+            <div class="button-profile">
+                <a class="button-profile-href" href="/profile">Профиль</a>
+            </div>
+    {% endif %}
     <h1 class="lesson-task-title">Задачи</h1>
     <ul class="lesson-list-task">
         <ul class="lesson-list-task-classWork">

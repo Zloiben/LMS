@@ -3,6 +3,11 @@
 {% block content %}
     <link rel="stylesheet" type="text/css" href="/static/css/courses.css"/>
     <h1 class="courses-title">Курсы</h1>
+    {% if user_auth == True %}
+            <div class="button-profile">
+                <a class="button-profile-href" href="/profile">Профиль</a>
+            </div>
+    {% endif %}
     <ul class="courses-list">
         <li class="courses-list-item">
             <a class="course-card" href="/courses/lessons">
