@@ -86,17 +86,16 @@ def tasks(lesson, task):
             f.save(os.path.join(UPLOAD_FOLDER, f'lesson_{lesson}\\task_{task}', filename))
             result_testing = Testing(lesson, task)
             # TODO: Trello - задача <хранение результатов тестов>
+            score = lesson_data['max_score']
             if result_testing.test() is True:
-                score = lesson_data['max_score']
                 data['courses']['Python Basics']['lessons'][lesson][f'task_{task}']['score'] = lesson_data['max_score']
-                data['courses']['Python Basics']["profile"]['all_score'] += 14
+                data['courses']['Python Basics']["profile"]['all_score'] += score
             else:
-                score = 0
                 data['courses']['Python Basics']['lessons'][lesson][f'task_{task}']['score'] = 0
-                if data['courses']['Python Basics']["profile"]['all_score'] - 14 < 0:
+                if data['courses']['Python Basics']["profile"]['all_score'] - score < 0:
                     data['courses']['Python Basics']["profile"]['all_score'] = 0
                 else:
-                    data['courses']['Python Basics']["profile"]['all_score'] -= 14
+                    data['courses']['Python Basics']["profile"]['all_score'] -= score
             data['courses']['Python Basics']['lessons'][lesson][f'task_{task}']['result'] = result_testing.test()
             data = json.dumps(data)
             User.query.filter_by(id=user.id).first().data = data

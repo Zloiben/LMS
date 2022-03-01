@@ -1,26 +1,29 @@
-import os
+from subprocess import Popen, PIPE
+COMMAND = r"python ./instance/testing/lesson_1/task_2/test_file_2.py"
 
 
-def test_1():
-    os.system('python .\\instance\\testing\lesson_1\\task_2\\test_file_2.py >> '
-              '.\\instance\\testing\lesson_1\\task_2\\text_2.txt')
-    # os.system('1')
-    # os.system('2')
-    # os.system('3')
-    with open(".\\instance\\testing\lesson_1\\task_2\\text_2.txt", encoding="utf-8") as file:
-        data = list(map(str.strip, file.readlines()))
-        print(data)
+def test_1(input_data, result):
+    p = Popen(COMMAND, stdout=PIPE, stdin=PIPE, encoding='utf-8')
+    out, err = p.communicate(input=input_data)
+    return out.strip() == result
 
 
-def test_2():
-    pass
+def test_2(input_data, result):
+    p = Popen(COMMAND, stdout=PIPE, stdin=PIPE, encoding='utf-8')
+    out, err = p.communicate(input=input_data)
+    return out.strip() == result
+
+
+def test_3(input_data, result):
+    p = Popen(COMMAND, stdout=PIPE, stdin=PIPE, encoding='utf-8')
+    out, err = p.communicate(input=input_data)
+    return out.strip() == result
 
 
 def get_result():
     """Ответ Hello, World!"""
-    os.system('python .\\instance\\testing\lesson_1\\task_1\\test_file_1.py >> '
-              '.\\instance\\testing\lesson_1\\task_1\\text_1.txt')
-    with open(".\\instance\\testing\lesson_1\\task_1\\text_1.txt", encoding="utf-8") as file:
-        data = list(map(str.strip, file.readlines()))
-        print(data[-1])
-    return data[-1] == "Hello, World!"
+    if test_1("3\n2\n1", "1\n2\n3"):
+        if test_2("Hi\nCarramba!\nHohoho", "Hohoho\nCarramba!\nHi"):
+            if test_3("Карамба!\nКоррида!\nЧерт подери!", "Черт подери!\nКоррида!\nКарамба!"):
+                return True
+    return False
