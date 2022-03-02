@@ -1,6 +1,6 @@
 from subprocess import Popen, PIPE
 
-COMMAND = r"python ./test_file_2.py"
+COMMAND = r"python ./instance/testing/lesson_1/task_2/test_file_2.py"
 
 # input, result
 test_variants = [
@@ -23,7 +23,6 @@ def testing(input_data: str, result_waiting: str) -> tuple:
 
 
 def get_result():
-    """Ответ Hello, World!"""
     data_testing = []
     for index, test in enumerate(test_variants):
         result_testing = testing(test[0], test[1])

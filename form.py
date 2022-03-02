@@ -37,3 +37,27 @@ class RestoreAccountForm(FlaskForm):
     password = PasswordField('Пароль', validators=[DataRequired()])
     password2 = PasswordField('Повторите пароль', validators=[DataRequired()])
     submit = SubmitField('Войти')
+
+
+class SetName(FlaskForm):
+
+    name = StringField('Имя', validators=[DataRequired()])
+    submit = SubmitField('Подтвердить')
+
+
+class SetRole(FlaskForm):
+
+    role = StringField('Роль', validators=[DataRequired()])
+    submit = SubmitField('Подтвердить')
+
+
+class SetPassword(FlaskForm):
+
+    password = StringField('Пароль', validators=[DataRequired()])
+    submit = SubmitField('Подтвердить')
+
+
+class SetEmail(FlaskForm):
+
+    email = EmailField('Почта')
+    submit = SubmitField('Подтвердить')

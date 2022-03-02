@@ -20,6 +20,10 @@ ALLOWED_EXTENSIONS = ['py', 'txt']
 
 # --------------------------------------------Пользователь--------------------------------------------------------------
 
+# Админ роли
+ADMIN_ROLES = ["SuperAdmin", "Moderator"]
+# Все роли
+ALL_ROLES = ["SuperAdmin", "Moderator", "Teacher", "User"]
 
 standard_data = {
     "courses": {

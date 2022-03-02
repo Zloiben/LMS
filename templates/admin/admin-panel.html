@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {%  for user in dbUsers %}
+        <h4>{{ loop.index }} Имя: {{ user.name }} почта: {{ user.email }} роль: {{ user.role }}</h4>
+        <a href="/admin-panel/set-name/{{ loop.index }}">Сменить имя</a>
+        <a href="/admin-panel/set-email/{{ loop.index }}">Сменить почту</a>
+        <a href="/admin-panel/set-password/{{ loop.index }}">Сменить пароль</a>
+        <a href="/admin-panel/set-role/{{ loop.index }}">Сменить роль</a>
+    {% endfor %}
+{% endblock %}

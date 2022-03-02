@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+     <h1>{{ user_id }} Имя: {{ name }} email: {{ email }} роль {{ role }}</h1>
+    <section class="error">
+        {% if error == "email" %}
+            <h3>У вас указанна не верная почта</h3>
+        {% endif %}
+    </section>
+    <form class="form-set-email" action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.email.label }}<br>
+            {{ form.email(class="form-control") }}<br>
+            {% for error in form.email.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+    </form>
+{% endblock %}

@@ -25,7 +25,7 @@ def signup():
                         data = json.dumps(standard_data)
                         db.session.add(User(email=form.email.data,
                                             name=form.username.data,
-                                            role="user",
+                                            role="User",
                                             data=data,
                                             password=generate_password_hash(form.password.data, method='sha256')))
                         db.session.commit()
