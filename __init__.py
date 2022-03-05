@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
-from config import UPLOAD_FOLDER
+from config import UPLOAD_FOLDER, API_KEYS
 db = SQLAlchemy()
 
 
@@ -18,7 +18,7 @@ def create_app():
     def load_user(user_id):
         return User.query.get(int(user_id))
 
-    app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
+    app.config['SECRET_KEY'] = API_KEYS
     app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///Data.sqlite3'
 

@@ -1,110 +1,160 @@
-{% extends "base.html" %}
-
-{% block content %}
-
-    <!--Подключение стилей-->
-    <link rel="stylesheet" type="text/css" href="/static/css/index.css"/>
-    <form action="login">
-        <button type="submit" class="login-button">
-            Войти LMS
-        </button>
-    </form>
-    {% if user_auth == True %}
-            <div class="button-profile">
-                <a class="button-profile-href" href="/profile">Профиль</a>
+<!DOCTYPE html>
+<html style="font-size: 16px;" lang="ru">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="Супер LMS​​, Открыт набор!">
+    <meta name="description" content="">
+    <meta name="page_type" content="np-template-header-footer-from-plugin">
+    <title>Главная</title>
+    <link rel="stylesheet" href="/static/css/nicepage.css" media="screen">
+<link rel="stylesheet" href="/static/css/Главная.css" media="screen">
+    <script class="u-script" type="text/javascript" src="/static/scripts/jquery.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="/static/scripts/nicepage.js" defer=""></script>
+    <meta name="generator" content="Nicepage 4.6.5, nicepage.com">
+    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
+    <link id="u-page-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i|Black+And+White+Picture:400">
+    
+    
+    
+    
+    <script type="application/ld+json">{
+		"@context": "http://schema.org",
+		"@type": "Organization",
+		"name": "",
+		"logo": "images/logo.png",
+		"sameAs": [
+				"https://github.com/Zloiben/LMS",
+				"https://vk.com/zi_ddd",
+				"mailto:daniil2019.milkork@yandex.ru",
+				"Zi_ddd#3337"
+		]
+}</script>
+    <meta name="theme-color" content="#478ac9">
+    <meta property="og:title" content="Главная">
+    <meta property="og:type" content="website">
+  </head>
+  <body data-home-page="Главная.html" data-home-page-title="Главная" class="u-body u-overlap u-xl-mode"><header class="u-align-center u-clearfix u-header u-white u-header" id="sec-bfb0"><div class="u-clearfix u-sheet u-sheet-1">
+        <a class="u-image u-logo u-image-1" data-image-width="128" data-image-height="128">
+          <img src="/static/images/logo.png" class="u-logo-image u-logo-image-1">
+        </a>
+        <h1 class="u-custom-font u-text u-text-1">Супер LMS </h1>
+      </div></header>
+    <section class="u-align-right u-clearfix u-section-1" id="carousel_63b6">
+      <div class="u-palette-1-light-1 u-shape u-shape-rectangle u-shape-1"></div>
+      <div class="u-clearfix u-gutter-0 u-layout-wrap u-layout-wrap-1">
+        <div class="u-gutter-0 u-layout">
+          <div class="u-layout-row">
+            <div class="u-align-left u-container-style u-image u-layout-cell u-right-cell u-size-34 u-image-1" src="" data-image-width="1200" data-image-height="675">
+              <div class="u-container-layout u-valign-top u-container-layout-1" src=""></div>
             </div>
-    {% endif %}
-    <img class="prog-image" src="../static/images/prog.jpg" alt="Не удалось загрузить"/>
-
-    <main class="main-content">
-        <br>
-        <section class="main-content-title">
-            <div class="content-text">
-                <h2 class="main-title-text">Учитесь программированию легко и дома!</h2>
-                <p>Когда вы поступите , вам откроется LMS система,
-                    в которой будет открыт курс по выбранному направлению</p>
+            <div class="u-container-style u-layout-cell u-left-cell u-palette-5-dark-3 u-shape-rectangle u-size-26 u-layout-cell-2">
+              <div class="u-container-layout u-container-layout-2">
+                <h3 class="u-align-left u-custom-font u-font-montserrat u-text u-text-1"> Учитесь программированию легко и дома!</h3>
+                <div class="u-border-3 u-border-grey-15 u-line u-line-horizontal u-line-1"></div>
+                <h4 class="u-text u-text-2"> Когда вы поступите , вам откроется LMS система, в которой будет открыт курс по выбранному направлению.</h4>
+                <h6 class="u-text u-text-3">Если возникли вопросы позвоните по номеру -&nbsp; +<span style="font-weight: 700;">7950055555</span>
+                </h6>
+              </div>
             </div>
-        </section>
-
-        <br>
-        <section class="main-content-description">
-            <table class="content-table space">
-                <tr>
-                    <th class="standard-title-style">
-                        <div class="python-icon"><img src="/static/images/python-icon.png" alt=""/></div>
-                        Чему учим
-                    </th>
-                    <th class="standard-title-style">
-                        <div class="system-learning-icon"><img src="/static/images/system_lerning.png" alt=""/></div>
-                        Как учим
-                    </th>
-                    <th class="standard-title-style">
-                        <div class="teacher-icon"><img src="/static/images/teacher.png" alt=""/></div>
-                        Кто учит
-                    </th>
-                </tr>
-                <tr>
-                    <td valign="top">
-                        <div class="info-1-text">
-                            <div class="info-1-text-description standard-description-style">
-                                <p>Промышленному программированию на&nbsp;языке Python.</p>
-                                <p>Это один из&nbsp;самых популярных языков в&nbsp;мире, который позволяет решать
-                                    множество
-                                    задач. Python используют и&nbsp;в&nbsp;YouTube, и&nbsp;в&nbsp;NASA, и&nbsp;у&nbsp;нас
-                                    в&nbsp;Яндексе.
-                                    А&nbsp;еще он&nbsp;назван в&nbsp;честь «Летающего цирка Монти Пайтона».</p>
-                                <p>Мы&nbsp;пройдем весь путь: изучим основы, а&nbsp;затем научимся решать прикладные
-                                    задачи,
-                                    создавать приложения с&nbsp;графическим интерфейсом и&nbsp;разными библиотеками.</p>
-                            </div>
-                        </div>
-                    </td>
-                    <td valign="top">
-                        <div class="info-2-text">
-                            <div class="info-2-text-description standard-description-style">
-                                <p>Полный курс длится два года.</p>
-                                <p>Нужно пройти конкурсный отбор. При поступлении можно не&nbsp;уметь программировать.
-                                    На&nbsp;занятиях
-                                    ребята знакомятся с&nbsp;теорией и&nbsp;осваивают технологии на&nbsp;практике.
-                                    Обучение
-                                    бесплатное.</p>
-                                <p>В&nbsp;группе не&nbsp;больше
-                                    17&nbsp;человек. Обучение на&nbsp;первом курсе длится с&nbsp;октября по&nbsp;апрель,
-                                    на&nbsp;втором&nbsp;—
-                                    с&nbsp;сентября по&nbsp;апрель. Занятия не&nbsp;пересекаются по&nbsp;времени со&nbsp;школьными
-                                    уроками.</p>
-                                <p>После каждого урока нужно выполнять домашнее задание&nbsp;— ленивых отчисляем, у&nbsp;нас
-                                    все
-                                    серьезно.</p>
-                            </div>
-                        </div>
-                    </td>
-                    <td valign="top">
-                        <div class="info-3-text">
-                            <div class="info-3-text-description standard-description-style">
-                                <p>Сертифицированные преподаватели.</p>
-                                <p>Занятия ведут местные преподаватели, прошедшие специальный отбор и&nbsp;обучение&nbsp;—
-                                    это
-                                    профессиональные разработчики, преподаватели вузов, школьные учителя, студенты
-                                    старших
-                                    курсов технических специальностей. Мы&nbsp;непрерывно сопровождаем их&nbsp;в&nbsp;течение
-                                    учебного года.</p>
-                                <p>Мы&nbsp;тщательно подходим к&nbsp;отбору преподавателей и&nbsp;уделяем особое
-                                    внимание их&nbsp;обучению
-                                    и&nbsp;повышению квалификации.</p>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-        </section>
-        <section class="registration-form">
-            <h3>Открыт набор!</h3>
-            <form action="signup">
-                <button type="submit" class="registration-button">
-                    Регистрация
-                </button>
-            </form>
-        </section>
-    </main>
-{% endblock %}
+          </div>
+        </div>
+      </div>
+        <a href="/login" class="u-btn u-button-style u-gradient u-none u-text-body-alt-color u-btn-1">вХОД В lms</a>
+        {% if user_auth == True %}
+        <a href="/profile" class="u-btn u-button-style u-gradient u-none u-text-body-alt-color u-btn-2">пРОФИЛЬ</a>
+        {% endif %}
+    </section>
+    <section class="u-align-center u-clearfix u-palette-1-light-1 u-section-2" id="carousel_229b">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <div class="u-clearfix u-gutter-30 u-layout-wrap u-layout-wrap-1">
+          <div class="u-gutter-0 u-layout" style="">
+            <div class="u-layout-row" style="">
+              <div class="u-size-20" style="">
+                <div class="u-layout-col" style="">
+                  <div class="u-align-center u-container-style u-layout-cell u-radius-50 u-size-60 u-white u-layout-cell-1">
+                    <div class="u-container-layout u-valign-top u-container-layout-1">
+                      <img class="u-expanded-width u-image u-image-contain u-image-default u-image-1" src="/static/images/python-icon.png" alt="" data-image-width="128" data-image-height="128">
+                      <h5 class="u-text u-text-default u-text-palette-1-dark-2 u-text-1"> Чему учим</h5>
+                      <p class="u-text u-text-palette-1-dark-2 u-text-2"> Промышленному программированию на&nbsp;языке Python.Это один из&nbsp;самых популярных языков в&nbsp;мире, который позволяет решать множество задач. Python используют и&nbsp;в&nbsp;YouTube, и&nbsp;в&nbsp;NASA, и&nbsp;у&nbsp;нас в&nbsp;Яндексе. А&nbsp;еще он&nbsp;назван в&nbsp;честь «Летающего цирка Монти Пайтона».Мы&nbsp;пройдем весь путь: изучим основы, а&nbsp;затем научимся решать прикладные задачи, создавать приложения с&nbsp;графическим интерфейсом и&nbsp;разными библиотеками.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="u-size-20">
+                <div class="u-layout-col">
+                  <div class="u-align-center u-container-style u-layout-cell u-radius-50 u-size-60 u-white u-layout-cell-2">
+                    <div class="u-container-layout u-container-layout-2">
+                      <img class="u-image u-image-contain u-image-default u-image-2" src="/static/images/system_lerning.png" alt="" data-image-width="128" data-image-height="128">
+                      <h5 class="u-text u-text-palette-1-dark-2 u-text-3"> Как учим</h5>
+                      <p class="u-text u-text-palette-1-dark-2 u-text-4"> Полный курс длится два года.Нужно пройти конкурсный отбор. При поступлении можно не&nbsp;уметь программировать. На&nbsp;занятиях ребята знакомятся с&nbsp;теорией и&nbsp;осваивают технологии на&nbsp;практике. Обучение бесплатное.В&nbsp;группе не&nbsp;больше 17&nbsp;человек. Обучение на&nbsp;первом курсе длится с&nbsp;октября по&nbsp;апрель, на&nbsp;втором&nbsp;— с&nbsp;сентября по&nbsp;апрель. Занятия не&nbsp;пересекаются по&nbsp;времени со&nbsp;школьными уроками.После каждого урока нужно выполнять домашнее задание&nbsp;— ленивых отчисляем, у&nbsp;нас все серьезно.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="u-size-20">
+                <div class="u-layout-col">
+                  <div class="u-align-center u-container-style u-layout-cell u-radius-50 u-size-60 u-white u-layout-cell-3">
+                    <div class="u-container-layout u-container-layout-3">
+                      <img class="u-expanded-width u-image u-image-contain u-image-default u-image-3" src="/static/images/teacher.png" alt="" data-image-width="128" data-image-height="128">
+                      <h5 class="u-text u-text-default u-text-palette-1-dark-2 u-text-5"> Кто учит</h5>
+                      <p class="u-text u-text-palette-1-dark-2 u-text-6"> Сертифицированные преподаватели.Занятия ведут местные преподаватели, прошедшие специальный отбор и&nbsp;обучение&nbsp;— это профессиональные разработчики, преподаватели вузов, школьные учителя, студенты старших курсов технических специальностей. Мы&nbsp;непрерывно сопровождаем их&nbsp;в&nbsp;течение учебного года.Мы&nbsp;тщательно подходим к&nbsp;отбору преподавателей и&nbsp;уделяем особое внимание их&nbsp;обучению и&nbsp;повышению квалификации.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="u-align-center u-clearfix u-palette-1-base u-section-3" id="carousel_3e66">
+      <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+        <div class="u-clearfix u-expanded-width u-layout-wrap u-layout-wrap-1">
+          <div class="u-layout">
+            <div class="u-layout-row">
+              <div class="u-align-center-sm u-align-center-xs u-container-style u-layout-cell u-size-24-xl u-size-25-lg u-size-25-md u-size-25-sm u-size-25-xs u-layout-cell-1">
+                <div class="u-container-layout u-valign-top u-container-layout-1">
+                  <div class="u-image u-image-circle u-image-contain u-preserve-proportions u-image-1" alt="" data-image-width="626" data-image-height="626"></div>
+                </div>
+              </div>
+              <div class="u-align-center-sm u-align-center-xs u-align-left-lg u-align-left-md u-align-left-xl u-container-style u-layout-cell u-size-35-lg u-size-35-md u-size-35-sm u-size-35-xs u-size-36-xl u-layout-cell-2">
+                <div class="u-container-layout u-container-layout-2">
+                  <h2 class="u-custom-font u-text u-text-default u-text-1">Открыт набор!</h2>
+                  <p class="u-text u-text-2">Подайте заявку и начните учиться уже сегодня</p>
+                  <a href="/signup" class="u-border-none u-btn u-btn-round u-button-style u-custom-color-1 u-hover-custom-color-3 u-radius-50 u-text-body-alt-color u-btn-1">Подать заявку</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    
+    <footer class="u-clearfix u-footer u-grey-80" id="sec-5f84"><div class="u-clearfix u-sheet u-sheet-1">
+        <a class="u-image u-logo u-image-1" data-image-width="128" data-image-height="128">
+          <img src="/static/images/logo-5.png" class="u-logo-image u-logo-image-1">
+        </a>
+        <div class="u-align-left u-social-icons u-spacing-10 u-social-icons-1">
+          <a class="u-social-url" target="_blank" data-type="Custom" title="Github" href="https://github.com/Zloiben/LMS"><span class="u-file-icon u-icon u-social-custom u-social-icon u-icon-1"><img src="/static/images/3291695.png" alt=""></span>
+          </a>
+          <a class="u-social-url" target="_blank" data-type="VK" title="VK" href="https://vk.com/zi_ddd"><span class="u-icon u-social-icon u-social-vk u-icon-2"><svg class="u-svg-link" preserveAspectRatio="xMidYMin slice" viewBox="0 0 112 112" style=""><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-f92b"></use></svg><svg class="u-svg-content" viewBox="0 0 112 112" x="0" y="0" id="svg-f92b"><circle fill="currentColor" class="st0" cx="56.1" cy="56.1" r="55"></circle><path fill="#FFFFFF" d="M88.2,80.7l-9.8,0.1c0,0-2.1,0.4-4.9-1.5c-3.7-2.5-7.2-9.1-9.9-8.2C60.9,72,61,77.9,61,77.9s0,1.3-0.6,1.9
+            c-0.7,0.7-2,0.9-2,0.9H54c0,0-9.7,0.6-18.3-8.3c-9.3-9.7-17.6-29-17.6-29s-0.5-1.3,0-1.9c0.6-0.7,2.2-0.7,2.2-0.7l10.5-0.1
+            c0,0,1,0.2,1.7,0.7c0.6,0.4,0.9,1.2,0.9,1.2s1.7,4.3,4,8.2c4.4,7.6,6.4,9.3,7.9,8.4c2.2-1.2,1.5-10.7,1.5-10.7s0-3.5-1.1-5
+            c-0.9-1.2-2.5-1.5-3.3-1.6c-0.6-0.1,0.4-1.5,1.6-2.1c1.9-0.9,5.2-1,9.2-0.9c3.1,0,4,0.2,5.2,0.5c3.6,0.9,2.4,4.3,2.4,12.4
+            c0,2.6-0.5,6.3,1.4,7.5c0.8,0.5,2.8,0.1,7.7-8.3c2.3-4,4.1-8.6,4.1-8.6s0.4-0.8,1-1.2s1.4-0.3,1.4-0.3l11.1-0.1c0,0,3.3-0.4,3.9,1.1
+            c0.6,1.6-1.2,5.3-5.8,11.3c-7.4,9.9-8.3,9-2.1,14.7c5.9,5.5,7.1,8.1,7.3,8.5C93.4,80.4,88.2,80.7,88.2,80.7z"></path></svg></span>
+          </a>
+          <a class="u-social-url" target="_blank" data-type="Email" title="Email" href="mailto:daniil2019.milkork@yandex.ru"><span class="u-icon u-social-email u-social-icon u-icon-3"><svg class="u-svg-link" preserveAspectRatio="xMidYMin slice" viewBox="0 0 112 112" style=""><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-a79c"></use></svg><svg class="u-svg-content" viewBox="0 0 112 112" x="0" y="0" id="svg-a79c"><circle fill="currentColor" cx="56.1" cy="56.1" r="55"></circle><path id="path3864" fill="#FFFFFF" d="M27.2,28h57.6c4,0,7.2,3.2,7.2,7.2l0,0v42.7c0,3.9-3.2,7.2-7.2,7.2l0,0H27.2
+	c-4,0-7.2-3.2-7.2-7.2V35.2C20,31.1,23.2,28,27.2,28 M56,52.9l28.8-17.8H27.2L56,52.9 M27.2,77.7h57.6V43.5L56,61.3L27.2,43.5V77.7z
+	"></path></svg></span>
+          </a>
+          <a class="u-social-url" target="_blank" data-type="Custom" title="Discord" href="https://discord.gg/paZhmkY2JA"><span class="u-file-icon u-icon u-social-custom u-social-icon u-icon-4"><img src="/static/images/3670157.png" alt=""></span>
+          </a>
+        </div>
+        <div class="u-border-1 u-border-white u-expanded-width u-line u-line-horizontal u-opacity u-opacity-50 u-line-1"></div>
+        <p class="u-align-center u-custom-font u-text u-text-1">Это супер пупер LMS!</p>
+      </div></footer>
+  </body>
+</html>
