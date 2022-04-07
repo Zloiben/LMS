@@ -58,5 +58,5 @@ standard_data = {
 
 API_KEYS = {
     "APP_KEY": 'yandexlyceum_secret_key',
-    "YANDEX_DISK": ""
+    "YANDEX_DISK": "AQAAAABc8C5_AAe5srmGN01dmEy1uOjmiGmTZeo"
 }

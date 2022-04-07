@@ -66,6 +66,7 @@ def lesson(lesson):
 @main.route('/courses/lessons/lesson/<lesson>/tasks/<task>',  methods=['GET', 'POST'])
 def tasks(lesson, task):
     """ВЫбранное задание"""
+
     if current_user.is_authenticated is False:
         return redirect('/login')
 
@@ -75,7 +76,6 @@ def tasks(lesson, task):
     data = json.loads(user.data)
     lesson_data = data['courses']['Python Basics']['lessons'][lesson][f'task_{task}']
     score = lesson_data['score']
-
     form = TaskInputFile()
     if form.validate_on_submit():
         f = form.file.data
@@ -84,19 +84,20 @@ def tasks(lesson, task):
             # Сохранение отправленного файла в папку для тестов
             filename = secure_filename(f"test_file_{task}.py")
             f.save(os.path.join(UPLOAD_FOLDER, f'lesson_{lesson}\\task_{task}', filename))
-            result_testing = Testing(lesson, task)
-            # TODO: Trello - задача <хранение результатов тестов>
+            Test = Testing(lesson, task)
             score = lesson_data['max_score']
-            if result_testing.test() is True:
-                data['courses']['Python Basics']['lessons'][lesson][f'task_{task}']['score'] = lesson_data['max_score']
-                data['courses']['Python Basics']["profile"]['all_score'] += score
+            result_testing = Test.test()
+
+            if result_testing is True:
+                if lesson_data["result"] in ["-", False]:
+                    data['courses']['Python Basics']['lessons'][lesson][f'task_{task}']['score'] = lesson_data['max_score']
+                    data['courses']['Python Basics']["profile"]['all_score'] += score
             else:
                 data['courses']['Python Basics']['lessons'][lesson][f'task_{task}']['score'] = 0
-                if data['courses']['Python Basics']["profile"]['all_score'] - score < 0:
-                    data['courses']['Python Basics']["profile"]['all_score'] = 0
-                else:
+                if lesson_data["result"] is True:
                     data['courses']['Python Basics']["profile"]['all_score'] -= score
-            data['courses']['Python Basics']['lessons'][lesson][f'task_{task}']['result'] = result_testing.test()
+
+            data['courses']['Python Basics']['lessons'][lesson][f'task_{task}']['result'] = result_testing
             data = json.dumps(data)
             User.query.filter_by(id=user.id).first().data = data
             db.session.commit()

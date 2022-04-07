@@ -26,9 +26,9 @@ def get_result():
     data_testing = []
     for index, test in enumerate(test_variants):
         result_testing = testing(test[0], test[1])
+        if result_testing[0] is False:
+            return index, result_testing
         data_testing.append(result_testing[0])
-        # TODO: Пока что сдеалл чтобы просто возращало True или False
-        #   В будущем trello Переделать тесты
     print(data_testing)
     if all(data_testing):
         return True

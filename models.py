@@ -1,8 +1,11 @@
+
 from flask_login import UserMixin
+from sqlalchemy_serializer import SerializerMixin
+
 from . import db, create_app
 
 
-class User(UserMixin, db.Model):
+class User(UserMixin, db.Model, SerializerMixin):
 
     id = db.Column('id', db.Integer, primary_key=True)
     name = db.Column(db.String(100))
