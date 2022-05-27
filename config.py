@@ -43,7 +43,7 @@ standard_data = {
                         "score": 0,
                         "max_score": 20
                     },
-                    "task_3": {
+                    "task_5": {
                         "result": "-",
                         "score": 0,
                         "max_score": 30

@@ -1,4 +1,4 @@
-from flask import Blueprint,  render_template, redirect
+from flask import Blueprint, render_template, redirect, send_file
 from flask_login import login_required, current_user
 from . import db, create_app
 import json
@@ -85,17 +85,12 @@ def tasks(lesson, task):
             filename = secure_filename(f"test_file_{task}.py")
             f.save(os.path.join(UPLOAD_FOLDER, f'lesson_{lesson}\\task_{task}', filename))
             Test = Testing(lesson, task)
-            score = lesson_data['max_score']
+            max_score = lesson_data['max_score']
             result_testing = Test.test()
 
             if result_testing is True:
-                if lesson_data["result"] in ["-", False]:
-                    data['courses']['Python Basics']['lessons'][lesson][f'task_{task}']['score'] = lesson_data['max_score']
-                    data['courses']['Python Basics']["profile"]['all_score'] += score
-            else:
-                data['courses']['Python Basics']['lessons'][lesson][f'task_{task}']['score'] = 0
-                if lesson_data["result"] is True:
-                    data['courses']['Python Basics']["profile"]['all_score'] -= score
+                data['courses']['Python Basics']['lessons'][lesson][f'task_{task}']['score'] = score
+                data['courses']['Python Basics']["profile"]['all_score'] += score
 
             data['courses']['Python Basics']['lessons'][lesson][f'task_{task}']['result'] = result_testing
             data = json.dumps(data)
@@ -117,3 +112,12 @@ def content(lesson):
 
     file_path = f'courses/Python Basics/lessons/{lesson}/content-lesson-{lesson}.html'
     return render_template(file_path, user_auth=current_user.is_authenticated)
+
+
+@main.route('/test_download')
+def test_download():
+    # TODO: Испомощью этого реализовать скачку с Яндекс диска и генерировать код HTML па
+    return send_file('instance/testing/lesson_1/task_5/test_file_5.py',
+                     mimetype='text/py',
+                     attachment_filename='test_file_5.py',
+                     as_attachment=True)

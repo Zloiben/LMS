@@ -3,7 +3,6 @@ from flask_restful import reqparse, abort, Api, Resource
 import flask
 from flask import jsonify
 
-from error import abort_if_user_not_found
 from . import db
 from .models import User
 
