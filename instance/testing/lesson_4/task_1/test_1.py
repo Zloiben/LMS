@@ -2,23 +2,22 @@ from subprocess import Popen, PIPE
 
 # input, result
 test_variants = [
-    ("3\n2\n1", "1\n2\n3"),
-    ("Hi\nCarramba!\nHohoho", "Hohoho\nCarramba!\nHi"),
-    ("Карамба!\nКоррида!\nЧерт подери!", "Черт подери!\nКоррида!\nКарамба!")
+    ("не пустая\n\nой", "не пустая"),
+    ("Ехал\nГрека\nчерез\nреку\n\nвидит", "Ехал\nГрека\nчерез\nреку")
 ]
 
 
-def testing(input_data: str, result_waiting: str) -> tuple:
+def testing(input_data: str, wait_result: str) -> tuple:
     """
+    # цикл while Учитель
     функция для тестирования отправленных файлов.
     :param input_data: вводимые данные.
-    :param result_waiting: ожидаемый результат.
-    :return Возращает кортеж (Результат, что было выведенною)
+    :return Возвращает кортеж (Результат, что было выведенною)
     """
-    COMMAND = r"python ./instance/testing/lesson_1/task_2/test_file_2.py"
+    COMMAND = r"python ./instance/testing/lesson_3/task_3/test_file_1.py"
     p = Popen(COMMAND, stdout=PIPE, stdin=PIPE, encoding='utf-8')
     out, err = p.communicate(input=input_data)
-    return out.strip() == result_waiting, out.strip()
+    return out.strip() == wait_result, out.strip()
 
 
 def get_result():
@@ -31,3 +30,7 @@ def get_result():
     if all(data_testing):
         return True
     return False
+
+
+if __name__ == "__main__":
+    print(get_result())

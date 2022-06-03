@@ -1,32 +1,52 @@
 from subprocess import Popen, PIPE
 
+
+def function(input_data) -> str:
+    a = int(input_data)
+    if a % 4 == 0 and a % 100 != 0:
+        result = 'Високосный'
+    elif a % 400 == 0:
+        result = 'Високосный'
+    else:
+        result = 'Не високосный'
+
+    return str(result)
+
+
 # input, result
 test_variants = [
-    ("print", "print ? Конечно, помню, ведь мы проходили это на прошлом занятии!"),
-    ("input", "input ? Конечно, помню, ведь мы проходили это на прошлом занятии!"),
-    ("string", "string ? Конечно, помню, ведь мы проходили это на прошлом занятии!")
+    "2016",
+    "1900",
+    "1000",
+    "1223",
+    "1231",
+    "2022",
+    "2021",
+    "2020",
+    "2019",
+    "2018",
+    "2017",
+    "2000"
 ]
 
 
-def testing(input_data: str, result_waiting: str) -> tuple:
+def testing(input_data: str) -> tuple:
     """
+    # Простые функции Високосный
     функция для тестирования отправленных файлов.
     :param input_data: вводимые данные.
-    :param result_waiting: ожидаемый результат.
     :return Возращает кортеж (Результат, что было выведенною)
     """
-    COMMAND = r"python ./instance/testing/lesson_1/task_5/test_file_5.py"
+    COMMAND = r"python ./instance/testing/lesson_3/task_4/test_file_4.py"
     p = Popen(COMMAND, stdout=PIPE, stdin=PIPE, encoding='utf-8')
     out, err = p.communicate(input=input_data)
-    print(err)
-    return out.strip() == result_waiting, out.strip()
+    return out.strip() == function(input_data), out.strip()
 
 
 def get_result():
     data_testing = []
     for index, test in enumerate(test_variants):
-        result_testing = testing(test[0], test[1])
-        print(result_testing)
+        result_testing = testing(test[0])
         if result_testing[0] is False:
             return index, result_testing[1], test[0], test[1]
         data_testing.append(result_testing[0])

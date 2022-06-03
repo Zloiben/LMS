@@ -1,3 +1,5 @@
+from typing import Tuple
+
 from flask import Blueprint, render_template, redirect, send_file
 from flask_login import login_required, current_user
 from . import db, create_app
@@ -75,7 +77,6 @@ def tasks(lesson, task):
     user = current_user
     data = json.loads(user.data)
     lesson_data = data['courses']['Python Basics']['lessons'][lesson][f'task_{task}']
-    score = lesson_data['score']
     form = TaskInputFile()
     if form.validate_on_submit():
         f = form.file.data
@@ -87,20 +88,42 @@ def tasks(lesson, task):
             Test = Testing(lesson, task)
             max_score = lesson_data['max_score']
             result_testing = Test.test()
+            print(result_testing)
 
-            if result_testing is True:
-                data['courses']['Python Basics']['lessons'][lesson][f'task_{task}']['score'] = score
-                data['courses']['Python Basics']["profile"]['all_score'] += score
+            if isinstance(result_testing, Tuple) is True:
+                lesson_data['result'] = False
+            elif isinstance(result_testing, Tuple) is False and result_testing is False:
+                lesson_data['result'] = False
+            elif isinstance(result_testing, Tuple) is False and result_testing is True:
+                lesson_data['score'] = max_score
+                data['courses']['Python Basics']["profile"]['all_score'] += max_score
+                lesson_data['result'] = True
 
-            data['courses']['Python Basics']['lessons'][lesson][f'task_{task}']['result'] = result_testing
+            result_testing_bool = lesson_data['result']
+
             data = json.dumps(data)
             User.query.filter_by(id=user.id).first().data = data
             db.session.commit()
-            return render_template(file_path, form=form, score=score, result=lesson_data['result'],
+            if isinstance(result_testing, Tuple):
+                # Пришел результат тестирования где несколько тестов.
+                # [0] - Указывает на номер теста.
+                # [1] - Вывод программы
+                # [2] - Водимые данные
+                # [3] - Ожидаемый ответ
+                return render_template(file_path,
+                                       form=form,
+                                       score=max_score,
+                                       result=result_testing_bool,
+                                       user_auth=current_user.is_authenticated,
+                                       number_test=result_testing[0] + 1,
+                                       input=result_testing[2],
+                                       wait_result=result_testing[3],
+                                       output=result_testing[1])
+            return render_template(file_path, form=form, score=max_score, result=result_testing_bool,
                                    user_auth=current_user.is_authenticated)
-        return render_template(file_path, form=form, score=score, result="error",
+        return render_template(file_path, form=form, score=lesson_data['score'], result="error",
                                user_auth=current_user.is_authenticated)
-    return render_template(file_path, form=form, score=score, result=lesson_data['result'],
+    return render_template(file_path, form=form, score=lesson_data['score'], result=lesson_data['result'],
                            user_auth=current_user.is_authenticated)
 
 

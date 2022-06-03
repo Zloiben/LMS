@@ -43,6 +43,16 @@ standard_data = {
                         "score": 0,
                         "max_score": 20
                     },
+                    "task_3": {
+                        "result": "-",
+                        "score": 0,
+                        "max_score": 15
+                    },
+                    "task_4": {
+                        "result": "-",
+                        "score": 0,
+                        "max_score": 30
+                    },
                     "task_5": {
                         "result": "-",
                         "score": 0,

@@ -12,14 +12,25 @@
                 <a class="button-profile-href" href="/profile">Профиль</a>
             </div>
     {% endif %}
-    <form class="form-task" action="" method="post" enctype="multipart/form-data" novalidate>
+    <div class="result-message">
         {% if result == True %}
             <h4 class="result-True">Вам начислено {{ score }} баллов</h4>
         {% elif result == False %}
             <h4 class="result-False">Вам нужно доработать программу</h4>
+
+            <h3>Номер теста:</h3>
+            <p>{{ number_test }}</p>
+            <h3>Ввод:</h3>
+            <p>{{ input }}</p>
+            <h3>Ожидаемый результат:</h3>
+            <p>{{ wait_result }}</p>
+            <h3>Вывод:</h3>
+            <p>{{ output }}</p>
         {% elif result == "error" %}
             <h4 class="result-False">Файл должен быть в формате .py или .txt</h4>
         {% endif %}
+    </div>
+    <form class="form-task" action="" method="post" enctype="multipart/form-data" novalidate>
         {{ form.hidden_tag() }}
         <p>
             {{ form.file.label }}<br>
