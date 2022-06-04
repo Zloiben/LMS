@@ -1,3 +1,4 @@
+
 from typing import Tuple
 
 from flask import Blueprint, render_template, redirect, send_file
@@ -5,18 +6,19 @@ from flask_login import login_required, current_user
 from . import db, create_app
 import json
 import os
+import yadisk
 
 from werkzeug.utils import secure_filename
-
-from form import TaskInputFile
-from instance.testing.testing import Testing
-
-from instance.function.cheking import allowed_file
-from config import UPLOAD_FOLDER
-
 from .models import User
 
+from form import TaskInputFile
+from instance.function.cheking import allowed_file
+from config import UPLOAD_FOLDER, API_KEYS
+from instance.testing.testing import Testing
+
 main = Blueprint('main', __name__)
+
+yandex_disk = yadisk.YaDisk(API_KEYS["YANDEX_DISK"])
 
 
 @main.route('/')
